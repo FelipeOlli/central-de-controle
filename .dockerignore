@@ -1,0 +1,13 @@
+# Build context: only what Hub needs is copied explicitly in Dockerfile
+# Ignore common noise to speed up context upload
+node_modules
+.git
+.gitignore
+*.log
+.env
+.env.*
+!.env.example
+packages/hub/node_modules
+packages/hub/.env
+packages/hub/*.db
+packages/hub/prisma/*.db
