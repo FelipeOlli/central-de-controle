@@ -1,0 +1,10 @@
+# Local env
+.env
+.env.local
+
+# SQLite (local dev)
+*.db
+prisma/*.db
+
+# Build
+dist/
