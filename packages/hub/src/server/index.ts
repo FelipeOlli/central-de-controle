@@ -13,14 +13,18 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const hubRoot = path.resolve(__dirname, "../..");
 dotenv.config({ path: path.resolve(hubRoot, ".env") });
+const isProductionEnv = process.env.NODE_ENV === "production";
 if (!process.env.DATABASE_URL) {
-  process.env.DATABASE_URL = "file:./dev.db";
+  process.env.DATABASE_URL = isProductionEnv ? "file:/tmp/hub.sqlite" : "file:./dev.db";
 }
 console.log("[hub-api] starting (cwd=%s)", process.cwd());
 if (process.env.DATABASE_URL?.startsWith("file:")) {
-  const schemaDir = path.join(hubRoot, "prisma");
   const rel = process.env.DATABASE_URL.replace(/^file:/, "").trim();
-  process.env.DATABASE_URL = "file:" + path.resolve(schemaDir, rel);
+  const isAbsolute = path.isAbsolute(rel);
+  if (!isAbsolute) {
+    const schemaDir = path.join(hubRoot, "prisma");
+    process.env.DATABASE_URL = "file:" + path.resolve(schemaDir, rel);
+  }
 }
 
 const prisma = new PrismaClient();

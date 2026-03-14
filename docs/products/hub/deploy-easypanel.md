@@ -23,7 +23,7 @@ No EasyPanel: **Applications** → seu app → **Environment** (ou **Variables**
 
 ### Modo inicial (rápido): SQLite (no container)
 
-- **`DATABASE_URL`** — Opcional: se não definir, o Hub usa `file:./dev.db` no container. Para definir: `file:./dev.db` (use volume se quiser persistir o banco).
+- **`DATABASE_URL`** — Opcional: padrão no container é `file:/tmp/hub.sqlite` (gravável). Para persistir, defina um volume no EasyPanel para um diretório (ex.: `/data`) e use `file:/data/hub.sqlite`.
 - **`JWT_SECRET`** — Recomendado em produção (ex.: string longa aleatória).
 - **`FRONTEND_ORIGIN`** — URL do front (ex.: `https://hub.seudominio.com`).
 
