@@ -108,106 +108,132 @@ export function InicioPage() {
       </div>
 
       {viewMode === "dashboard" && (
-        <div className="tab-content stack">
-          <div className="dashboard-cards grid">
-            <div className="card stack summary-card">
-              <span className="card-label">Projetos</span>
-              <strong className="summary-number">{projects.length}</strong>
+        <div className="tab-content bento-wrap">
+          {/* Grid bento no estilo Year Wrapped */}
+          <div className="bento-grid">
+            {/* Hero card — ocupa 2 colunas, gradiente */}
+            <div className="card bento-hero">
+              <span className="card-label">Sua visão</span>
+              <div className="bento-hero-title">Hub</div>
+              <p className="bento-hero-sub">
+                {ideas.length + commitments.length + projects.length === 0
+                  ? "Crie projetos, ideias e compromissos para começar."
+                  : "Tudo em um lugar: projetos, ideias e compromissos."}
+              </p>
+            </div>
+
+            {/* Métrica: Total Projetos */}
+            <div className="card bento-metric">
+              <span className="card-label">Total de projetos</span>
+              <div className="bento-metric-value bento-metric-accent">{projects.length}</div>
               <Link to="/projetos">Ver todos</Link>
             </div>
-            <div className="card stack summary-card">
-              <span className="card-label">Ideias</span>
-              <strong className="summary-number">{ideas.length}</strong>
-              <Link to="/ideias">Ver todos</Link>
-            </div>
-            <div className="card stack summary-card">
-              <span className="card-label">Compromissos</span>
-              <strong className="summary-number">{commitments.length}</strong>
-              <Link to="/compromissos">Ver todos</Link>
-            </div>
-          </div>
 
-          <div className="dashboard-grid grid">
-            <div className="card stack">
-              <span className="card-label">Compromissos atrasados</span>
-              <h3 className="sr-only">Compromissos atrasados</h3>
-              {overdue.length === 0 ? (
-                <p className="muted">Nenhum atrasado.</p>
-              ) : (
-                <ul className="compact-list">
-                  {overdue.slice(0, 5).map((c) => (
-                    <li key={c.id}>
-                      <strong>{c.title}</strong> — venc. {c.dueDate}
-                    </li>
-                  ))}
-                  {overdue.length > 5 && (
-                    <li>
-                      <Link to="/compromissos">+{overdue.length - 5} mais</Link>
-                    </li>
-                  )}
-                </ul>
+            {/* Card branco de contraste — "Em destaque" */}
+            <div className="card bento-white">
+              <span className="card-label bento-white-label">Em destaque</span>
+              <p className="bento-white-title">
+                {activeProjects.length > 0 ? "Projetos em andamento" : "Ideias ativas"}
+              </p>
+              <p className="bento-white-desc">
+                {activeProjects.length > 0
+                  ? `${activeProjects.length} projeto(s) ativo(s). Foco e consistência.`
+                  : ideas.filter((i) => i.status === "ativa").length > 0
+                    ? "Você tem ideias ativas. Vale explorar e priorizar."
+                    : "Crie sua primeira ideia ou projeto para começar."}
+              </p>
+              <Link to={activeProjects.length > 0 ? "/projetos" : "/ideias"} className="bento-white-link">
+                Ver
+              </Link>
+            </div>
+
+            {/* Métrica: Ideias + Compromissos */}
+            <div className="card bento-metric">
+              <span className="card-label">Ideias</span>
+              <div className="bento-metric-value">{ideas.length}</div>
+              <Link to="/ideias">Ver todas</Link>
+            </div>
+            <div className="card bento-metric">
+              <span className="card-label">Compromissos</span>
+              <div className="bento-metric-value">{commitments.length}</div>
+              {thisWeek.length > 0 && (
+                <span className="chip">{thisWeek.length} esta semana</span>
               )}
               <Link to="/compromissos">Ver todos</Link>
             </div>
 
-            <div className="card stack">
-              <span className="card-label">Esta semana</span>
-              <h3 className="sr-only">Esta semana</h3>
+            {/* Card largo: lista (ex.: Top Tech Stack → aqui: Compromissos esta semana) */}
+            <div className="card bento-wide">
+              <div className="section-header">
+                <span className="card-label">Compromissos esta semana</span>
+                <Link to="/compromissos">Ver todos</Link>
+              </div>
               {thisWeek.length === 0 ? (
                 <p className="muted">Nenhum compromisso esta semana.</p>
               ) : (
                 <ul className="compact-list">
-                  {thisWeek.slice(0, 5).map((c) => (
+                  {thisWeek.slice(0, 4).map((c) => (
                     <li key={c.id}>
                       <strong>{c.title}</strong> — {c.dueDate}
                     </li>
                   ))}
-                  {thisWeek.length > 5 && (
-                    <li>
-                      <Link to="/compromissos">+{thisWeek.length - 5} mais</Link>
-                    </li>
-                  )}
                 </ul>
               )}
-              <Link to="/compromissos">Ver todos</Link>
             </div>
 
-            <div className="card stack">
-              <span className="card-label">Projetos em andamento</span>
-              <h3 className="sr-only">Projetos em andamento</h3>
-              {activeProjects.length === 0 ? (
-                <p className="muted">Nenhum projeto em andamento.</p>
-              ) : (
-                <ul className="compact-list">
-                  {activeProjects.slice(0, 5).map((p) => (
-                    <li key={p.id}>
-                      <Link to="/projetos">{p.name}</Link>
-                      {p._count && (p._count.ideas > 0 || p._count.commitments > 0) && (
-                        <span className="muted"> — {p._count.ideas} ideias, {p._count.commitments} comp.</span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <Link to="/projetos">Ver todos</Link>
+            {/* Card gradiente: atrasados ou "Top categoria" */}
+            <div className="card bento-gradient">
+              <span className="card-label">Atenção</span>
+              <div className="bento-gradient-title">
+                {overdue.length > 0 ? `${overdue.length} atrasado(s)` : "Tudo em dia"}
+              </div>
+              <p className="muted">
+                {overdue.length > 0
+                  ? "Compromissos passaram do vencimento."
+                  : "Nenhum compromisso atrasado."}
+              </p>
+              <Link to="/compromissos">Ver compromissos</Link>
             </div>
 
-            <div className="card stack">
-              <span className="card-label">Ideias recentes</span>
-              <h3 className="sr-only">Ideias recentes</h3>
-              {recentIdeas.length === 0 ? (
-                <p className="muted">Nenhuma ideia ainda.</p>
-              ) : (
-                <ul className="compact-list">
-                  {recentIdeas.map((idea) => (
-                    <li key={idea.id}>
-                      <strong>{idea.title}</strong>
-                      <span className="muted"> — {idea.status}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <Link to="/ideias">Ver todos</Link>
+            {/* Card tipo heatmap: mini grid (atividade) */}
+            <div className="card bento-mini">
+              <span className="card-label">Resumo</span>
+              <div className="bento-mini-grid" aria-hidden>
+                {[
+                  projects.length,
+                  ideas.length,
+                  commitments.length,
+                  overdue.length,
+                  thisWeek.length,
+                  activeProjects.length,
+                ].map((n, i) => (
+                  <div
+                    key={i}
+                    className="bento-mini-dot"
+                    style={{ opacity: n > 0 ? 0.3 + Math.min(n / 10, 0.7) : 0.15 }}
+                  />
+                ))}
+              </div>
+              <p className="muted">Projetos · Ideias · Compromissos</p>
+            </div>
+
+            {/* Faixa inferior: CTA (como "Share your Wrapped") */}
+            <div className="bento-cta">
+              <div>
+                <h3 className="bento-cta-title">Acesso rápido</h3>
+                <p className="muted">Navegue para projetos, ideias e compromissos.</p>
+              </div>
+              <div className="bento-cta-buttons">
+                <Link to="/projetos" className="bento-cta-btn bento-cta-btn-outline">
+                  Projetos
+                </Link>
+                <Link to="/ideias" className="bento-cta-btn bento-cta-btn-primary">
+                  Ideias
+                </Link>
+                <Link to="/compromissos" className="bento-cta-btn bento-cta-btn-outline">
+                  Compromissos
+                </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -503,6 +503,241 @@ fieldset {
   margin-bottom: 0;
 }
 
+/* ——— Bento grid (estilo Year Wrapped) ——— */
+.bento-wrap {
+  margin-top: 0.5rem;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.bento-hero {
+  grid-column: span 2;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.25) 0%, rgba(121, 40, 202, 0.3) 50%, rgba(255, 0, 128, 0.2) 100%);
+  border-color: var(--hub-border);
+}
+
+.bento-hero .card-label {
+  color: var(--hub-accent);
+}
+
+.bento-hero-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  margin: 0.25rem 0 0.75rem;
+  color: var(--hub-fg);
+}
+
+.bento-hero-sub {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 28ch;
+}
+
+.bento-metric {
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bento-metric-value {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--hub-fg);
+  letter-spacing: -0.02em;
+}
+
+.bento-metric-accent {
+  background: linear-gradient(135deg, #7928ca, #ff0080);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bento-white {
+  background: #ffffff;
+  border-color: var(--hub-border);
+  color: #0a0a0a;
+}
+
+.bento-white .card-label,
+.bento-white-label {
+  color: #64748b;
+}
+
+.bento-white-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0.25rem 0 0.5rem;
+  color: #0a0a0a;
+}
+
+.bento-white-desc {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.bento-white-link {
+  color: #0a0a0a;
+  font-weight: 600;
+}
+
+.bento-white-link:hover {
+  color: #7928ca;
+}
+
+.bento-wide {
+  grid-column: span 2;
+}
+
+.bento-gradient {
+  grid-column: span 1;
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #0a0a0a;
+}
+
+.bento-gradient .card-label,
+.bento-gradient .muted {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.bento-gradient a {
+  color: #0a0a0a;
+  font-weight: 600;
+}
+
+.bento-mini {
+  min-height: 140px;
+}
+
+.bento-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.35rem;
+  margin: 0.5rem 0;
+}
+
+.bento-mini-dot {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  background: var(--hub-accent);
+  transition: opacity var(--hub-transition);
+}
+
+.bento-cta {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: linear-gradient(90deg, var(--hub-card) 0%, var(--hub-card-hover) 100%);
+  border: 1px solid var(--hub-border);
+  border-radius: var(--hub-radius-card);
+  padding: 1.25rem 1.5rem;
+}
+
+.bento-cta-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  color: var(--hub-fg);
+}
+
+.bento-cta-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.bento-cta-btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background-color var(--hub-transition), color var(--hub-transition);
+}
+
+.bento-cta-btn-outline {
+  background: transparent;
+  color: var(--hub-fg);
+  border: 1px solid var(--hub-border-hover);
+}
+
+.bento-cta-btn-outline:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.bento-cta-btn-primary {
+  background: var(--hub-fg);
+  color: var(--hub-bg);
+  border: none;
+}
+
+.bento-cta-btn-primary:hover {
+  background: var(--hub-accent);
+  color: var(--hub-bg);
+}
+
+@media (max-width: 900px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bento-hero {
+    grid-column: span 2;
+    min-height: 280px;
+  }
+
+  .bento-wide {
+    grid-column: span 2;
+  }
+
+  .bento-gradient {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 540px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bento-hero {
+    grid-column: span 1;
+    min-height: 240px;
+  }
+
+  .bento-wide {
+    grid-column: span 1;
+  }
+
+  .bento-cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

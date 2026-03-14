@@ -11,7 +11,7 @@ Este guia adapta a operação do Hub para servidor com EasyPanel.
 ## 1) Criar aplicação no EasyPanel
 
 1. Em **Applications** > **Create App** > **Dockerfile/Git**.
-2. Conecte o repositório `aiox-core`.
+2. Conecte o repositório (ex.: `SynkraAI/aios-core` ou `FelipeOlli/central-de-controle`).
 3. Configure:
    - **Dockerfile Path:** `packages/hub/Dockerfile`
    - **Build Context:** raiz do repositório (`.`)
@@ -19,9 +19,9 @@ Este guia adapta a operação do Hub para servidor com EasyPanel.
 
 ## 2) Definir Environment Variables
 
-### Modo inicial (rápido): SQLite
+### Modo inicial (rápido): SQLite (no container)
 
-- `DATABASE_URL=file:./packages/hub/prisma/dev.db`
+- `DATABASE_URL=file:./dev.db` (relativo ao diretório do schema no container; use volume para persistir)
 - `JWT_SECRET=<chave-forte>`
 - `FRONTEND_ORIGIN=https://<seu-dominio>`
 
