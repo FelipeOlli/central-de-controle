@@ -14,6 +14,8 @@ COPY packages/hub packages/hub
 RUN npm run prisma:generate -w @aiox/hub
 RUN npm run build -w @aiox/hub
 RUN npm run build:server -w @aiox/hub
+# Schema aplicado no builder (evita Prisma CLI + wasm no runtime)
+RUN DATABASE_URL=file:/tmp/hub.sqlite npm run db:push -w @aiox/hub
 
 FROM node:20-alpine AS runtime
 
@@ -35,11 +37,9 @@ COPY --from=builder /app/packages/hub/dist-server packages/hub/dist-server
 # Prisma client é gerado em packages/hub/node_modules/ (workspace), não na raiz
 COPY --from=builder /app/packages/hub/node_modules/@prisma node_modules/@prisma
 COPY --from=builder /app/packages/hub/node_modules/.prisma node_modules/.prisma
-# CLI para db push no primeiro start (schema em /tmp ou volume)
-COPY --from=builder /app/packages/hub/node_modules/prisma node_modules/prisma
-COPY --from=builder /app/packages/hub/node_modules/.bin/prisma node_modules/.bin/prisma
+# SQLite com schema já aplicado (criado no builder); container usa cópia em /tmp (gravável)
+COPY --from=builder /tmp/hub.sqlite /tmp/hub.sqlite
 
 EXPOSE 3001
 
-# Garante schema criado antes de subir o servidor (ex.: SQLite em /tmp/hub.sqlite)
-CMD ["sh", "-c", "npx prisma db push --schema packages/hub/prisma/schema.prisma --skip-generate && exec node packages/hub/dist-server/index.js"]
+CMD ["node", "packages/hub/dist-server/index.js"]
