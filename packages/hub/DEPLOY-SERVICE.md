@@ -31,11 +31,12 @@ Use este texto em plataformas de deploy (EasyPanel, Coolify, etc.) ou como refer
 
 ### Variáveis de ambiente (produção)
 
-- `DATABASE_URL` — SQLite: `file:./dev.db` (no container, relativo ao schema); ou connection string PostgreSQL/MySQL.
-- `JWT_SECRET` — Chave forte para tokens.
-- `FRONTEND_ORIGIN` — Origen do front (ex.: `https://hub.seudominio.com`).
-- `NODE_ENV=production` (já definido no Dockerfile).
-- `PORT=3001` (opcional; padrão 3001).
+Configure no EasyPanel em **Environment** (ou variáveis do serviço):
+
+- **`DATABASE_URL`** — Se não definida, o app usa `file:./dev.db` (SQLite no container). Para produção explícita: `file:./dev.db` ou connection string PostgreSQL/MySQL.
+- **`JWT_SECRET`** — Chave forte para tokens (recomendado em produção).
+- **`FRONTEND_ORIGIN`** — Origem do front (ex.: `https://seudominio.com`); padrão `http://localhost:5173`.
+- `NODE_ENV=production` e `PORT=3001` já vêm do Dockerfile.
 
 ### Repositórios
 

@@ -13,6 +13,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const hubRoot = path.resolve(__dirname, "../..");
 dotenv.config({ path: path.resolve(hubRoot, ".env") });
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = "file:./dev.db";
+}
 console.log("[hub-api] starting (cwd=%s)", process.cwd());
 if (process.env.DATABASE_URL?.startsWith("file:")) {
   const schemaDir = path.join(hubRoot, "prisma");

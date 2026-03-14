@@ -19,11 +19,13 @@ Este guia adapta a operação do Hub para servidor com EasyPanel.
 
 ## 2) Definir Environment Variables
 
+No EasyPanel: **Applications** → seu app → **Environment** (ou **Variables**). Adicione:
+
 ### Modo inicial (rápido): SQLite (no container)
 
-- `DATABASE_URL=file:./dev.db` (relativo ao diretório do schema no container; use volume para persistir)
-- `JWT_SECRET=<chave-forte>`
-- `FRONTEND_ORIGIN=https://<seu-dominio>`
+- **`DATABASE_URL`** — Opcional: se não definir, o Hub usa `file:./dev.db` no container. Para definir: `file:./dev.db` (use volume se quiser persistir o banco).
+- **`JWT_SECRET`** — Recomendado em produção (ex.: string longa aleatória).
+- **`FRONTEND_ORIGIN`** — URL do front (ex.: `https://hub.seudominio.com`).
 
 ### Escala (recomendado em produção): PostgreSQL ou MySQL
 
