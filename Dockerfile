@@ -6,7 +6,8 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 COPY packages/hub/package.json packages/hub/package.json
-RUN npm ci
+# ignore-scripts evita prepare/husky no builder (e em CI sem git)
+RUN npm ci --ignore-scripts
 
 COPY packages/hub packages/hub
 
@@ -23,7 +24,8 @@ ENV PORT=3001
 
 COPY package.json package-lock.json ./
 COPY packages/hub/package.json packages/hub/package.json
-RUN npm ci --omit=dev
+# Evita prepare/husky (devDependency) no stage de produção
+RUN npm ci --omit=dev --ignore-scripts
 
 COPY --from=builder /app/packages/hub/dist packages/hub/dist
 COPY --from=builder /app/packages/hub/prisma packages/hub/prisma
