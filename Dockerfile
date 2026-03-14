@@ -30,8 +30,9 @@ RUN npm ci --omit=dev --ignore-scripts
 COPY --from=builder /app/packages/hub/dist packages/hub/dist
 COPY --from=builder /app/packages/hub/prisma packages/hub/prisma
 COPY --from=builder /app/packages/hub/dist-server packages/hub/dist-server
-COPY --from=builder /app/node_modules/@prisma node_modules/@prisma
-COPY --from=builder /app/node_modules/.prisma node_modules/.prisma
+# Prisma client é gerado em packages/hub/node_modules/ (workspace), não na raiz
+COPY --from=builder /app/packages/hub/node_modules/@prisma node_modules/@prisma
+COPY --from=builder /app/packages/hub/node_modules/.prisma node_modules/.prisma
 
 EXPOSE 3001
 
